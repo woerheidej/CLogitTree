@@ -1,4 +1,4 @@
-#' Function to perform prepare.data
+#' Function to perform CLogitTree
 #'
 #' Performs prepare.data, which corrects the data types inside your data frame to what is needed for the package#'
 #' @param data Data frame (containing all required variables)
@@ -13,7 +13,11 @@ prepare.data <- function(data) {
     }
     if (!is.numeric(data[, i])) {
       data[, i] <- as.factor(data[, i])
+      if(length(unique(data[, i])) > length(data[, i])/2){
+        print(paste0("The column named: ", names(data)[i], ", seems to be an ID or open text, please have a look at it. You can drop the variable using: data <- data[, -", i,"]"))
+      }
     }
+    
   }
   return(data)
 }
